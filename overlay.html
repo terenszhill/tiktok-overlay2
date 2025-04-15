@@ -38,6 +38,14 @@
   </div>
 
   <script>
+  const socket = new WebSocket("wss://server-pf8l.onrender.com");
+
+  socket.onmessage = (event) => {
+    const uzenet = event.data.toLowerCase();
+    if (uzenet === "piros" || uzenet === "kek") {
+      addVote(uzenet);
+    }
+  };
     let szavazatok = { piros: 0, kek: 0 };
 
     function addVote(csapat) {
