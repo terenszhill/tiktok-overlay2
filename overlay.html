@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Piros vs Kék</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: sans-serif;
+    }
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 100vh;
+      font-size: 3em;
+    }
+    .team {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+    }
+    .piros {
+      background-color: rgba(255, 0, 0, 0.2);
+      color: red;
+    }
+    .kek {
+      background-color: rgba(0, 0, 255, 0.2);
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="piros" class="team piros">Piros: 0</div>
+    <div id="kek" class="team kek">Kék: 0</div>
+  </div>
+
+  <script>
+    let szavazatok = { piros: 0, kek: 0 };
+
+    function addVote(csapat) {
+      szavazatok[csapat]++;
+      document.getElementById(csapat).textContent = csapat.charAt(0).toUpperCase() + csapat.slice(1) + ': ' + szavazatok[csapat];
+    }
+
+    window.addVote = addVote;
+  </script>
+</body>
+</html>
