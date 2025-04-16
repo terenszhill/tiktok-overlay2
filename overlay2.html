@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Futóverseny Overlay</title>
+  <style>
+    body {
+      background: transparent;
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    #track {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to right, #f0f0f0 50%, #ffffff 50%);
+    }
+    .runner {
+      position: absolute;
+      bottom: 0;
+      height: 60px;
+      width: auto;
+      transition: left 0.5s ease;
+      font-size: 16px;
+      text-align: center;
+    }
+    .runner img {
+      height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div id="track"></div>
+  <script>
+    const runners = {};
+
+    function updateRunner(username, distance) {
+      if (!runners[username]) {
+        const div = document.createElement("div");
+        div.className = "runner";
+        div.id = `runner-${username}`;
+        div.innerHTML = `<img src="https://emojiapi.dev/api/v1/1f3c3/64.png"><br>@${username}`;
+        document.getElementById("track").appendChild(div);
+        runners[username] = div;
+      }
+      const left = Math.min(distance, 95);
+      runners[username].style.left = left + "vw";
+    }
+
+    // WebSocket kapcsolat a Node.js szerverrel
+    const socket = new WebSocket("ws://localhost:8080");
+
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      updateRunner(data.username, data.distance);
+    };
+  </script>
+</body>
+</html>
